@@ -189,17 +189,13 @@ class SkipList {
       const start = lists[i];
       const prev = searchList(start, value, this[_cmp]);
       const next = prev ? prev.next : this[_lists][i];
-      cur.prev = prev;
-      cur.next = next;
-
+      Object.assign(cur, { prev, next });
       if (!prev) { this[_lists][i] = cur; }
       if (next) { next.prev = cur; }
       if (prev) { prev.next = cur; }
       if (prevAdded) { prevAdded.nextSibling = cur; }
-
       prevAdded = cur;
     }
-    // this[_map].set(value, prevAdded);
     return this;
   }
 
@@ -219,17 +215,13 @@ class SkipList {
       index++;
     }
 
-    // console.log('Need to clean up search list');
+    // Cleanup search list
     if (index === this[_lists].length) {
       let cur = index - 1;
-      while (cur >= 0 && !this[_lists][cur]) {
-        cur--;
-      }
+      while (cur >= 0 && !this[_lists][cur]) { cur--; }
       this[_lists].length = cur + 1;
     }
-
     return true;
-
   }
 
   * [Symbol.iterator]() {
