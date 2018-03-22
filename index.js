@@ -1,22 +1,4 @@
-/**
- * [getRandomHeight description]
- * @return {[type]} [description]
- */
-const getRandomHeight = () => {
-  const LARGE = 1 << 25;
-  let result = 1;
-  while(true) {
-    let value = ~~(Math.random() * LARGE);
-    while(value) {
-      if (value % 2) {
-        value >>= 1;
-        result++;
-      } else {
-        return result;
-      }
-    }
-  }
-};
+const LARGE = 1 << 25;
 
 /**
  * [DEFAULT_CMP description]
@@ -28,6 +10,27 @@ const DEFAULT_CMP = (a, b) => {
   if (a < b) return -1;
   if (a > b) return 1;
   throw new Error('Unable to cmp values');
+};
+
+/**
+ * [getRandomHeight description]
+ * @param  {Number} [maxHeight=Infinity] [description]
+ * @return {[type]}                      [description]
+ */
+const getRandomHeight = (maxHeight=Infinity) => {
+  let result = 1;
+  while(true) {
+    let value = ~~(Math.random() * LARGE);
+    while(value) {
+      if (result >= maxHeight) return maxHeight;
+      if (value % 2) {
+        value >>= 1;
+        result++;
+      } else {
+        return result;
+      }
+    }
+  }
 };
 
 /**
@@ -57,7 +60,6 @@ class Node {
       this.prev = null;
       // Down / up ...
       this.nextSibling = null;
-      // this.prevSibling = null;
   }
 }
 
@@ -120,7 +122,7 @@ const _map = Symbol('map');
 
 class SkipList {
 
-  constructor(cmp) {
+  constructor(cmp = DEFAULT_CMP) {
     this[_cmp] = cmp;
     this[_lists] = [];
     this[_map] = new Map();
@@ -166,7 +168,7 @@ class SkipList {
 
   add(value) {
     if (this.has(value)) return this;
-    const height = getRandomHeight();
+    const height = getRandomHeight(this[_lists].length + 1);
     const lists = this[_lists].slice();
     const [ headLevel, headEntry ] = this[_getHeadInfo](value);
     let prevAdded = null;
