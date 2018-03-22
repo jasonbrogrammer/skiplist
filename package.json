@@ -1,0 +1,22 @@
+{
+  "name": "skiplist-js",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonbrogrammer/skiplist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonbrogrammer/skiplist/issues"
+  },
+  "homepage": "https://github.com/jasonbrogrammer/skiplist#readme",
+  "devDependencies": {
+    "jest": "^22.4.3"
+  }
+}
