@@ -199,6 +199,11 @@ class SkipList {
     return this;
   }
 
+  clear() {
+    this[_map].clear();
+    this[_lists].length = 0;
+  }
+
   delete(value) {
     if (!this.has(value)) return false;
     const node = this[_map].get(value);
